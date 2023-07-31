@@ -5,6 +5,10 @@
   margin-bottom: 20px;
 
 }
+.filterNumberSearch{
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
 .filterFormInput {
   margin-bottom: 10px;
   padding: 5px;

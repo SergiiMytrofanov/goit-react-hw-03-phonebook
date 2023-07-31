@@ -9,7 +9,8 @@ import { saveContactsToLocalStorage, loadContactsFromLocalStorage } from './Cont
 class App extends Component {
   state = {
     contacts: [],
-    filter: ''
+    filter: '',
+    searchByPhone: false,
   };
 
 componentDidMount() {
@@ -18,8 +19,8 @@ componentDidMount() {
 }
 
 
-componentDidUpdate(prevProps, prevState) {
-  if(prevState.contacts != this.state.contacts) {
+componentDidUpdate(prevState) {
+  if(prevState.contacts !== this.state.contacts) {
     saveContactsToLocalStorage(this.state.contacts);
   }
 }
@@ -59,15 +60,24 @@ componentDidUpdate(prevProps, prevState) {
     this.setState({ filter: event.target.value });
   };
 
+  handleToggleSearchByPhone = () => {
+    this.setState((prevState) => ({
+      searchByPhone: !prevState.searchByPhone,
+      filter: '',
+    }));
+  };
+
   getFilteredContacts = () => {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, searchByPhone } = this.state;
     return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      searchByPhone
+        ? contact.number.includes(filter)
+        : contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, searchByPhone } = this.state;
     const filteredContacts = this.getFilteredContacts();
 
     return (
@@ -75,10 +85,17 @@ componentDidUpdate(prevProps, prevState) {
         <h1 className={styles.header}>Телефонна книга</h1>
         <ContactForm addContact={this.addContact} />
 
-<div className={styles.contactContainer}><h2 className={styles.subHeader}>Контакти</h2>
-        <p className={styles.serchHeader}>Пошук за іменем</p>
-        <Filter filter={filter} onChange={this.handleFilterChange} />
-        <ContactList contacts={filteredContacts} onDeleteContact={this.deleteContact} /></div>
+        <div className={styles.contactContainer}>
+          <h2 className={styles.subHeader}>Контакти</h2>
+          <p className={styles.searchHeader}>Пошук за іменем або номером телефону</p>
+          <Filter
+            filter={filter}
+            onChange={this.handleFilterChange}
+            onToggleSearchByPhone={this.handleToggleSearchByPhone}
+            searchByPhone={searchByPhone}
+          />
+          <ContactList contacts={filteredContacts} onDeleteContact={this.deleteContact} />
+        </div>
       </div>
     );
   }

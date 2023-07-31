@@ -1,17 +1,34 @@
 import React from 'react';
-import styles from './FilterItem.module.css'
+import styles from './FilterItem.module.css';
 
-const Filter = ({ filter, onChange }) => {
+const Filter = ({ filter, onChange, onToggleSearchByPhone, searchByPhone }) => {
   return (
-    <form className={styles.filterForm}>
-      <input className={styles.filterFormInput}
+    <div className={styles.filterForm}>
+       <label className={styles.filterNumberSearch}>
+        <input
+          type="checkbox"
+          checked={searchByPhone}
+          onChange={onToggleSearchByPhone}
+        />Пошук за номероm телефону</label>
+        <input
+        className={styles.filterFormInput}
         type="text"
         name="filter"
         placeholder="Пошук за ім'ям"
         value={filter}
         onChange={onChange}
+        hidden={searchByPhone}
       />
-    </form>
+      <input
+        className={styles.filterFormInput}
+        type="text"
+        name="filterPhone"
+        placeholder="Пошук телефону"
+        value={filter}
+        onChange={onChange}
+        hidden={!searchByPhone}
+      />
+    </div>
   );
 };
 
