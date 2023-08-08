@@ -45,7 +45,7 @@ class ContactForm extends Component {
           className={styles.contactFormInput}
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Ім'я може містити лише літери, апостроф, тире та пробіли. Наприклад, Адріан, Джейкоб Мерсер, Шарль де Батц де Кастельмор д'Артаньян"
           required
           placeholder="Ім'я та Прізвище"
@@ -56,7 +56,7 @@ class ContactForm extends Component {
           className={styles.contactFormInput}
           type="tel"
           name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
           title="Номер телефону повинен складатися з цифр і може містити пробіли, тире, круглі дужки та починатися з +"
           required
           placeholder="+000 000 000 00 00"
